@@ -1,0 +1,27 @@
+[project]
+name = "system-one-open"
+version = "0.1.0"
+description = "Open-weights System One decisions: typed, calibrated, parallel answers from any causal LM in one forward pass"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "torch>=2.6",
+  "transformers>=4.51",
+  "accelerate",
+  "rich>=13",
+  "requests",
+]
+
+[project.optional-dependencies]
+doom = ["vizdoom>=1.3", "numpy"]
+
+[project.scripts]
+s1-race = "system_one.demos.race:main"
+s1-doom = "system_one.demos.doom:main"
+s1-wikirace = "system_one.demos.wikirace:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/system_one"]
