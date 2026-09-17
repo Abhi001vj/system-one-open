@@ -37,8 +37,10 @@ class Choice(Question):
     options: list[str] | None = None
 
     def __post_init__(self):
-        if not self.options or len(self.options) < 2:
-            raise ValueError(f"{self.key}: Choice needs at least 2 options")
+        if not self.options:
+            raise ValueError(f"{self.key}: Choice needs at least 1 option")
+        if len(set(self.options)) != len(self.options):
+            raise ValueError(f"{self.key}: duplicate options")
         if len(self.options) > len(KEYS):
             raise ValueError(f"{self.key}: at most {len(KEYS)} options; use shortlist() for more")
 

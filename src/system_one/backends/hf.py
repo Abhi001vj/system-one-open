@@ -36,6 +36,29 @@ def pick_device() -> str:
     return "cpu"
 
 
+def _tile(value, n: int):
+    if isinstance(value, torch.Tensor):
+        return value.repeat_interleave(n, dim=0) if value.dim() > 0 and value.shape[0] == 1 else value
+    if isinstance(value, list):
+        return [_tile(v, n) for v in value]
+    if isinstance(value, dict):
+        return {k: _tile(v, n) for k, v in value.items()}
+    return value
+
+
+def _tile_cache(cache: DynamicCache, n: int) -> None:
+    """Repeat every per-sequence state of every cache layer along the batch axis.
+
+    Works for attention KV and for linear-attention conv/recurrent states, which
+    don't all implement `batch_repeat_interleave`.
+    """
+    for layer in cache.layers:
+        for name, value in list(vars(layer).items()):
+            tiled = _tile(value, n)
+            if tiled is not value:
+                setattr(layer, name, tiled)
+
+
 class HFBackend(Backend):
     exact = True
 
@@ -165,7 +188,7 @@ class HFBackend(Backend):
             ids[i, : len(b)] = torch.tensor(b, device=dev)
             attn[i, P : P + len(b)] = 1
         cache = copy.deepcopy(self._cache)
-        cache.batch_repeat_interleave(B)
+        _tile_cache(cache, B)
         out = self.body(
             input_ids=ids,
             attention_mask=attn,
