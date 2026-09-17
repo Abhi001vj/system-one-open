@@ -5,11 +5,16 @@
 - [x] HF backend: tree attention + batched KV tiling, prefix cache reuse, equivalence tests
 - [x] llama.cpp server backend (exact, grammar-restricted) — any GGUF incl. Unsloth quants
 - [x] Ollama backend (approximate, top-k logprobs)
-- [ ] `s1-race`: 27 questions, parallel vs autoregressive JSON on the same weights, live terminal UI
-- [ ] `s1-doom`: ViZDoom, structured state → staged judgements (goal → fire/dodge/move/aim) → buttons
-- [ ] `s1-wikirace`: stage 1 score all links in parallel, stage 2 Choice over top-k; track hops/time/hallucinations
+- [x] `s1-race`: 27 questions, parallel vs autoregressive JSON on the same weights, live terminal UI
+- [x] `s1-doom`: ViZDoom, structured state → staged judgements (goal → fire/dodge/move/aim) → buttons
+- [x] `s1-wikirace`: tournament link selection; hops/time/hallucinations vs autoregressive baseline
+- [ ] Doom: combat scenario (`defend_the_center`, `deadly_corridor`), realtime mode numbers, kills/deaths per model
+- [ ] Web UI for demos (frame + judgement bars + compute graph), recorded GIFs for the README
 
 ## Next
+- [ ] **Shared-prefix GGUF backend** via llama.cpp's C API (`llama_memory_seq_cp` + multi-sequence
+      batch): prefill once, fork the KV per question. llama-server re-prefills per slot, measured
+      0.7–1.3 s per Doom decision vs ~110 ms in-process.
 - [ ] MLX backend (batched KV tiling) — fastest path for 8–30B models on Apple silicon
 - [ ] Option-order debiasing: permutation-averaged Choice
 - [ ] Hybrid-model prefix snapshots (store recurrent state at the static preamble boundary)

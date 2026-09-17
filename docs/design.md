@@ -56,10 +56,25 @@ Recurrent state cannot be rewound, so hybrid models only reuse an identical pref
 
 1. **Independence.** Branches can't condition on each other. Dependent decisions need stages
    (e.g. goal → movement), each stage still one pass.
-2. **Cardinality.** Letter keys cap `Choice` at 52. For hundreds of options (Wikirace links):
-   stage 1 scores each option with a `Bool`/`Score` in parallel, stage 2 is a `Choice` over the top-k.
+2. **Cardinality.** Letter keys cap `Choice` at 52. For hundreds of options (Wikirace links) use a
+   *tournament*: split into groups of ≤26, one `Choice` per group, all groups in one pass, top-2 of each
+   advance, repeat until ≤k remain, final `Choice`. Measured better and cheaper than one `Bool` per
+   option, because options compete inside a group and branch text is shared.
 3. **Calibration is the base model's.** Instruct models are often overconfident on letters. Fixing
    that is a training problem (see roadmap), not an inference trick.
 4. **Answer-letter bias.** Small models prefer `A`. Mitigations: option shuffling + averaging
    (costs one extra branch per permutation, still parallel).
 5. **Server backends** recompute the prefix per slot unless the server's prompt cache hits.
+
+## Patterns that proved useful in the demos
+
+- **Code decides what is possible, the model ranks it.** Build option lists from state (Doom:
+  only goals that are feasible; targets that exist). A `Choice` with one option is resolved by the
+  `Decider` without a model call (`stats["forced"]`).
+- **Stages for dependence.** Doom stage A (goal, target, item, fire) → plan sentence appended to the
+  state → stage B (movement, dodge). Each stage is one pass.
+- **Keep branch text short.** Branch tokens are the cost. Put shared instructions in the preamble
+  (prefix) and leave only the varying part in the branch.
+- **Phrase questions as observations, not permissions.** "Is an enemy in the crosshair, so the player
+  should fire this instant?" works; "Should the trigger be held down?" gets near-zero probability from
+  some instruct models. See `experiments.md`.

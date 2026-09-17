@@ -56,11 +56,21 @@ llama-server -m <any>.gguf --port 8091 -np 16 -c 32768 --kv-unified --jinja
 .venv/bin/python scripts/smoke.py ollama:gemma4:26b
 ```
 
-## Demos (in progress)
+## Demos
 
-- `s1-race` — 27 questions about a support ticket: parallel decisions vs. autoregressive JSON, side by side.
-- `s1-doom` — ViZDoom agent driven by typed decisions over structured game state, ~10 decisions/s.
-- `s1-wikirace` — navigate Wikipedia by scoring hundreds of links in parallel, then a shortlist choice.
+```bash
+s1-race --model qwen2.5-1.5b                     # 27 questions: parallel vs autoregressive JSON, same weights
+s1-doom --model qwen2.5-1.5b                     # ViZDoom window + live judgement bars; --headless, --realtime, --order "..."
+s1-wikirace --model llamacpp --all --baseline    # tournament link picking vs an LLM typing link titles
+```
+
+First results (M5 Pro 24 GB, details and caveats in [`docs/experiments.md`](docs/experiments.md)):
+
+- **Race:** 27 typed answers in 225–425 ms vs 6.7 s for autoregressive JSON on the *same* Qwen2.5-1.5B (≈16×).
+- **Doom:** two-stage decisions in ~110 ms in-process (≈9/s). Small models' judgement is the bottleneck, not speed.
+- **Wikirace:** 0 hallucinated links by construction; the autoregressive 1.5B baseline hallucinated 18–30 titles per race.
+- **Honest gap:** 1–2B models are poorly calibrated and phrasing-sensitive. Gemma-4-E4B is much better.
+  Calibration fine-tuning is the next real step ([`docs/roadmap.md`](docs/roadmap.md)).
 
 ## Docs
 
