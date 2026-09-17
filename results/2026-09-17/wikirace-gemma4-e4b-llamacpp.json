@@ -1,0 +1,151 @@
+[
+ {
+  "agent": "parallel",
+  "finished": true,
+  "hops": 2,
+  "model_seconds": 4.7496031659975415,
+  "hallucinations": 0,
+  "path": [
+   "Rubber duck",
+   "Western World",
+   "Roman Empire"
+  ],
+  "start": "Rubber duck",
+  "target": "Roman Empire",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": true,
+  "hops": 3,
+  "model_seconds": 0.8668917909963056,
+  "hallucinations": 0,
+  "path": [
+   "Rubber duck",
+   "Rubber duck race",
+   "Trier",
+   "Roman Empire"
+  ],
+  "start": "Rubber duck",
+  "target": "Roman Empire",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "parallel",
+  "finished": true,
+  "hops": 5,
+  "model_seconds": 13.791410373989493,
+  "hallucinations": 0,
+  "path": [
+   "K-pop",
+   "Artificial intelligence",
+   "Computer science",
+   "Algorithm",
+   "Search algorithm",
+   "Knuth\u2013Morris\u2013Pratt algorithm"
+  ],
+  "start": "K-pop",
+  "target": "Knuth\u2013Morris\u2013Pratt algorithm",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": true,
+  "hops": 10,
+  "model_seconds": 11.48350054299226,
+  "hallucinations": 3,
+  "path": [
+   "K-pop",
+   "Korean language",
+   "Koreanic language family",
+   "Glottolog",
+   "Linguistics",
+   "Computational linguistics",
+   "Computer science",
+   "Algorithm",
+   "Analysis of algorithms",
+   "Donald Knuth",
+   "Knuth\u2013Morris\u2013Pratt algorithm"
+  ],
+  "start": "K-pop",
+  "target": "Knuth\u2013Morris\u2013Pratt algorithm",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "parallel",
+  "finished": true,
+  "hops": 4,
+  "model_seconds": 10.791069832994253,
+  "hallucinations": 0,
+  "path": [
+   "Banana",
+   "Musaceae",
+   "Plant",
+   "Light",
+   "Quantum mechanics"
+  ],
+  "start": "Banana",
+  "target": "Quantum mechanics",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": true,
+  "hops": 4,
+  "model_seconds": 4.8603822919976665,
+  "hallucinations": 0,
+  "path": [
+   "Banana",
+   "Musa (genus)",
+   "Botany",
+   "Quantum biology",
+   "Quantum mechanics"
+  ],
+  "start": "Banana",
+  "target": "Quantum mechanics",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "parallel",
+  "finished": true,
+  "hops": 7,
+  "model_seconds": 19.586586748016998,
+  "hallucinations": 0,
+  "path": [
+   "Taylor Swift",
+   "Pop music",
+   "Scientific American",
+   "Science Online",
+   "PZ Myers",
+   "Biology",
+   "Botany",
+   "Photosynthesis"
+  ],
+  "start": "Taylor Swift",
+  "target": "Photosynthesis",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 15.105387415984296,
+  "hallucinations": 3,
+  "path": [
+   "Taylor Swift",
+   "Love Story (Taylor Swift song)",
+   "White Horse (Taylor Swift song)",
+   "Fearless (Taylor Swift album)",
+   "Fearless (Taylor Swift song)",
+   "Change (Taylor Swift song)",
+   "Long Live (Taylor Swift song)",
+   "Blank Space",
+   "Shake It Off",
+   "1989 (Taylor's Version)",
+   "Bad Blood (Taylor Swift song)"
+  ],
+  "start": "Taylor Swift",
+  "target": "Photosynthesis",
+  "backend": "llamacpp:gemma-4-E4B-it-UD-Q4_K_XL.gguf [16 slots]"
+ }
+]

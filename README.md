@@ -78,4 +78,6 @@ First results (M5 Pro 24 GB, details and caveats in [`docs/experiments.md`](docs
 - [`docs/design.md`](docs/design.md) — engine design, backends, limits
 - [`docs/experiments.md`](docs/experiments.md) — measured results log
 - [`docs/resources.md`](docs/resources.md) — papers, libraries, links
+- [`docs/plan.md`](docs/plan.md) — **next:** calibration LoRA, then shared-prefix llama.cpp backend
 - [`docs/roadmap.md`](docs/roadmap.md) — demos, calibration fine-tuning, MLX backend
+- [`results/`](results/) — raw run records cited in the experiments log

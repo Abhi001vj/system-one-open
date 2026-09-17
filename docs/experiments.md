@@ -1,5 +1,7 @@
 # Experiments log
 
+Raw records for cited runs live in [`results/`](../results/).
+
 Hardware unless noted: Apple M5 Pro, 24 GB unified memory, macOS. torch 2.14 (MPS), transformers 5.17,
 llama.cpp via Homebrew (ggml 0.10.1), Ollama 0.33.3.
 

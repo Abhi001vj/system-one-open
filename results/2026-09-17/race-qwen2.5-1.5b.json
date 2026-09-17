@@ -1,0 +1,247 @@
+{
+ "parallel_backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]",
+ "llm_backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]",
+ "parallel_s": 0.42496575000404846,
+ "llm_s": 6.74365029099863,
+ "llm_first_token_s": 1.3017423749988666,
+ "agreement": [
+  14,
+  27
+ ],
+ "schema_errors": [],
+ "parallel": {
+  "revenue_impacted": {
+   "type": "bool",
+   "p_true": 0.0421,
+   "value": false
+  },
+  "business_impact": {
+   "type": "choice",
+   "choice": "outage",
+   "confidence": 0.9134,
+   "probabilities": {
+    "none": 0.0012,
+    "degraded": 0.085,
+    "outage": 0.9134,
+    "data_loss": 0.0004
+   }
+  },
+  "integration_issue": {
+   "type": "bool",
+   "p_true": 0.9949,
+   "value": true
+  },
+  "account_health": {
+   "type": "choice",
+   "choice": "at_risk",
+   "confidence": 0.5825,
+   "probabilities": {
+    "healthy": 0.0137,
+    "watch": 0.4003,
+    "at_risk": 0.5825,
+    "churning": 0.0035
+   }
+  },
+  "incident_scope": {
+   "type": "choice",
+   "choice": "platform_wide",
+   "confidence": 0.6569,
+   "probabilities": {
+    "single_user": 0.0007,
+    "single_account": 0.1007,
+    "multi_account": 0.2417,
+    "platform_wide": 0.6569
+   }
+  },
+  "security_concern": {
+   "type": "bool",
+   "p_true": 0.0072,
+   "value": false
+  },
+  "duplicate_charge": {
+   "type": "bool",
+   "p_true": 0.728,
+   "value": true
+  },
+  "churn_likelihood": {
+   "type": "score",
+   "score": 3.072,
+   "level": 3,
+   "confidence": 0.7431,
+   "legend": {
+    "0": "very unlikely",
+    "1": "unlikely",
+    "2": "possible",
+    "3": "likely",
+    "4": "very likely"
+   }
+  },
+  "scope_certainty": {
+   "type": "score",
+   "score": 2.806,
+   "level": 3,
+   "confidence": 0.8125,
+   "legend": {
+    "0": "unknown",
+    "1": "vague",
+    "2": "partly clear",
+    "3": "clear"
+   }
+  },
+  "human_attention": {
+   "type": "bool",
+   "p_true": 0.3668,
+   "value": false
+  },
+  "security_risk": {
+   "type": "score",
+   "score": 2.994,
+   "level": 3,
+   "confidence": 0.9945,
+   "legend": {
+    "0": "none",
+    "1": "low",
+    "2": "medium",
+    "3": "high"
+   }
+  },
+  "feature_request": {
+   "type": "bool",
+   "p_true": 0.0049,
+   "value": false
+  },
+  "partner_launch_endangered": {
+   "type": "bool",
+   "p_true": 0.9312,
+   "value": true
+  },
+  "credible_churn_risk": {
+   "type": "bool",
+   "p_true": 0.1937,
+   "value": false
+  },
+  "production_down": {
+   "type": "bool",
+   "p_true": 0.6513,
+   "value": true
+  },
+  "customer_data_exposed": {
+   "type": "bool",
+   "p_true": 0.0003,
+   "value": false
+  },
+  "server_error_reported": {
+   "type": "bool",
+   "p_true": 0.9956,
+   "value": true
+  },
+  "financial_impact": {
+   "type": "score",
+   "score": 2.956,
+   "level": 3,
+   "confidence": 0.9596,
+   "legend": {
+    "0": "none",
+    "1": "minor",
+    "2": "moderate",
+    "3": "major"
+   }
+  },
+  "response_deadline": {
+   "type": "choice",
+   "choice": "today",
+   "confidence": 0.9858,
+   "probabilities": {
+    "within_hour": 0.011,
+    "today": 0.9858,
+    "this_week": 0.0024,
+    "no_deadline": 0.0008
+   }
+  },
+  "repeated_failures": {
+   "type": "bool",
+   "p_true": 0.1873,
+   "value": false
+  },
+  "primary_department": {
+   "type": "choice",
+   "choice": "technical",
+   "confidence": 0.9996,
+   "probabilities": {
+    "billing": 0.0001,
+    "technical": 0.9996,
+    "sales": 0.0002,
+    "legal": 0.0001,
+    "customer_success": 0.0001
+   }
+  },
+  "requested_resolution": {
+   "type": "choice",
+   "choice": "root_cause",
+   "confidence": 0.9997,
+   "probabilities": {
+    "refund": 0.0,
+    "restore_service": 0.0001,
+    "root_cause": 0.9997,
+    "account_change": 0.0,
+    "information": 0.0001
+   }
+  },
+  "threatening_language": {
+   "type": "bool",
+   "p_true": 0.0004,
+   "value": false
+  },
+  "concrete_deadline": {
+   "type": "bool",
+   "p_true": 0.9669,
+   "value": true
+  },
+  "issue_category": {
+   "type": "choice",
+   "choice": "integration_failure",
+   "confidence": 1.0,
+   "probabilities": {
+    "billing_error": 0.0,
+    "integration_failure": 1.0,
+    "performance": 0.0,
+    "access": 0.0,
+    "feature_gap": 0.0
+   }
+  },
+  "technical_specificity": {
+   "type": "score",
+   "score": 2.878,
+   "level": 3,
+   "confidence": 0.8793,
+   "legend": {
+    "0": "none",
+    "1": "low",
+    "2": "medium",
+    "3": "high"
+   }
+  },
+  "resolution_complexity": {
+   "type": "score",
+   "score": 2.996,
+   "level": 3,
+   "confidence": 0.9959,
+   "legend": {
+    "0": "trivial",
+    "1": "simple",
+    "2": "moderate",
+    "3": "complex"
+   }
+  }
+ },
+ "llm_raw": "```json\n{\n  \"revenue_impacted\": false,\n  \"business_impact\": \"outage\",\n  \"integration_issue\": true,\n  \"account_health\": \"at_risk\",\n  \"incident_scope\": \"multi_account\",\n  \"security_concern\": false,\n  \"duplicate_charge\": false,\n  \"churn_likelihood\": 3,\n  \"scope_certainty\": 2,\n  \"human_attention\": true,\n  \"security_risk\": 1,\n  \"feature_request\": false,\n  \"partner_launch_endangered\": false,\n  \"credible_churn_risk\": false,\n  \"production_down\": false,\n  \"customer_data_exposed\": false,\n  \"server_error_reported\": false,\n  \"financial_impact\": 2,\n  \"response_deadline\": \"today\",\n  \"repeated_failures\": false,\n  \"primary_department\": \"technical\",\n  \"requested_resolution\": \"restore_service\",\n  \"threatening_language\": false,\n  \"concrete_deadline\": false,\n  \"issue_category\": \"integration_failure\",\n  \"technical_specificity\": 2,\n  \"resolution_complexity\": 2\n}\n```",
+ "concurrent": false,
+ "stats": {
+  "prefix_tokens": 263,
+  "reused_tokens": 97,
+  "branch_tokens": 847,
+  "passes": 1,
+  "prefill_s": 0.06280370800232049,
+  "branches_s": 0.3618477919953875
+ }
+}

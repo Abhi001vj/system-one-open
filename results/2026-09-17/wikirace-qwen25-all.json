@@ -1,0 +1,183 @@
+[
+ {
+  "agent": "parallel",
+  "finished": true,
+  "hops": 7,
+  "model_seconds": 3.314737459018943,
+  "hallucinations": 0,
+  "path": [
+   "Rubber duck",
+   "Duck",
+   "Cf.",
+   "Treccani",
+   "Giovanni Treccani",
+   "Enciclopedia Italiana",
+   "Rome",
+   "Roman Empire"
+  ],
+  "start": "Rubber duck",
+  "target": "Roman Empire",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 15.441150373997516,
+  "hallucinations": 18,
+  "path": [
+   "Rubber duck",
+   "Rubber duck race",
+   "Dyserth",
+   "Welsh language",
+   "Hen Wlad Fy Nhadau",
+   "University of South Wales",
+   "University of Warwick",
+   "Royal Charter",
+   "Royal Charter (ship)",
+   "El Ikhwa Islands",
+   "Red Sea"
+  ],
+  "start": "Rubber duck",
+  "target": "Roman Empire",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "parallel",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 8.205324207010563,
+  "hallucinations": 0,
+  "path": [
+   "K-pop",
+   "TVXQ",
+   "Tomorrow (TVXQ album)",
+   "Album",
+   "Okie (J. J. Cale album)",
+   "Naturally (J. J. Cale album)",
+   "Troubadour (J. J. Cale album)",
+   "Shades (J. J. Cale album)",
+   "5 (J. J. Cale album)",
+   "Roll On (J. J. Cale album)",
+   "J. J. Cale"
+  ],
+  "start": "K-pop",
+  "target": "Knuth\u2013Morris\u2013Pratt algorithm",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 24.039306748993113,
+  "hallucinations": 27,
+  "path": [
+   "K-pop",
+   "Sorry, Sorry (Super Junior song)",
+   "N.SSign",
+   "38th Golden Disc Awards",
+   "Twice",
+   "Beats Per Minute (website)",
+   "Australia",
+   "Australia Day",
+   "Brisbane",
+   "European maritime exploration of Australia",
+   "Alexander (1783)"
+  ],
+  "start": "K-pop",
+  "target": "Knuth\u2013Morris\u2013Pratt algorithm",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "parallel",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 9.034305916982703,
+  "hallucinations": 0,
+  "path": [
+   "Banana",
+   "Cooking banana",
+   "Cooking",
+   "Smoking (cooking)",
+   "Pig roast",
+   "Cochinillo asado",
+   "Suckling pig",
+   "Sausage sizzle",
+   "Sausage",
+   "Monroe Sausage",
+   "Sausage casing"
+  ],
+  "start": "Banana",
+  "target": "Quantum mechanics",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 23.6770515399985,
+  "hallucinations": 24,
+  "path": [
+   "Banana",
+   "Cold War",
+   "Incheon",
+   "Incheon International Airport",
+   "Wattay International Airport",
+   "AirAsia",
+   "Lucy Torres-Gomez",
+   "Bench (Philippine clothing brand)",
+   "SM Retail",
+   "SM Mall of Asia",
+   "SM CDO Downtown"
+  ],
+  "start": "Banana",
+  "target": "Quantum mechanics",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "parallel",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 13.168151917023351,
+  "hallucinations": 0,
+  "path": [
+   "Taylor Swift",
+   "Cruel Summer (Taylor Swift song)",
+   "Mine (Taylor Swift song)",
+   "Innocent (Taylor Swift song)",
+   "Song",
+   "Nh\u00e3 nh\u1ea1c",
+   "Traditional Vietnamese dance",
+   "Traditional Vietnamese dance",
+   "Traditional Vietnamese dance",
+   "Traditional Vietnamese dance",
+   "Traditional Vietnamese dance"
+  ],
+  "start": "Taylor Swift",
+  "target": "Photosynthesis",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ },
+ {
+  "agent": "autoregressive",
+  "finished": false,
+  "hops": 10,
+  "model_seconds": 23.25914770999225,
+  "hallucinations": 30,
+  "path": [
+   "Taylor Swift",
+   "Hendersonville, Tennessee",
+   "Hamblen County, Tennessee",
+   "Dewitt Clinton Senter",
+   "Hawkins County, Tennessee",
+   "Third party (U.S. politics)",
+   "Runoff election",
+   "Mechanism design",
+   "Cournot competition",
+   "Zero-sum game",
+   "Simultaneous action selection"
+  ],
+  "start": "Taylor Swift",
+  "target": "Photosynthesis",
+  "backend": "hf:Qwen/Qwen2.5-1.5B-Instruct [tree, mps]"
+ }
+]

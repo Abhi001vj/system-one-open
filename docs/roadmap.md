@@ -1,5 +1,7 @@
 # Roadmap
 
+The detailed plan for the next two workstreams is in [plan.md](plan.md).
+
 ## Now
 - [x] Typed questions: Bool, Choice, Score
 - [x] HF backend: tree attention + batched KV tiling, prefix cache reuse, equivalence tests
