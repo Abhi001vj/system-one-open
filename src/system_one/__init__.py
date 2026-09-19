@@ -2,6 +2,9 @@
 
 from .backends import PRESETS, load_backend
 from .decider import Decider, Result
-from .types import Bool, Choice, Score
+from .types import Bool, Choice, Score, answer_labels, from_spec, to_spec
 
-__all__ = ["Decider", "Result", "Bool", "Choice", "Score", "PRESETS", "load_backend"]
+__all__ = [
+    "Decider", "Result", "Bool", "Choice", "Score", "PRESETS", "load_backend",
+    "to_spec", "from_spec", "answer_labels",
+]

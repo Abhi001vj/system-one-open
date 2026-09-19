@@ -36,6 +36,19 @@ def pick_device() -> str:
     return "cpu"
 
 
+def _load_model(model_id: str, dtype, device_map):
+    """Load a decoder, whatever head class the checkpoint declares."""
+    kwargs = dict(dtype=dtype, attn_implementation="sdpa")
+    if device_map:
+        kwargs["device_map"] = device_map
+    try:
+        return AutoModelForCausalLM.from_pretrained(model_id, **kwargs)
+    except (ValueError, KeyError):
+        from transformers import AutoModelForImageTextToText
+
+        return AutoModelForImageTextToText.from_pretrained(model_id, **kwargs)
+
+
 def _tile(value, n: int):
     if isinstance(value, torch.Tensor):
         return value.repeat_interleave(n, dim=0) if value.dim() > 0 and value.shape[0] == 1 else value
@@ -69,6 +82,7 @@ class HFBackend(Backend):
         dtype: torch.dtype | None = None,
         strategy: str = "auto",
         max_pass_tokens: int = 3072,
+        device_map: str | None = None,
     ):
         self.device = device or pick_device()
         if dtype is None:
@@ -76,11 +90,12 @@ class HFBackend(Backend):
         self.model_id = model_id
         self.name = f"hf:{model_id}"
         self.tok = AutoTokenizer.from_pretrained(model_id)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_id, dtype=dtype, attn_implementation="sdpa"
-        ).to(self.device)
+        self.model = _load_model(model_id, dtype, device_map)
+        if device_map is None:
+            self.model = self.model.to(self.device)
         self.model.eval()
-        self.body = self.model.model
+        # multimodal checkpoints (Gemma 4, Qwen3.5) wrap the decoder one level deeper
+        self.body = getattr(self.model.model, "language_model", None) or self.model.model
         self.head = self.model.get_output_embeddings()
         cfg = getattr(self.model.config, "text_config", None) or self.model.config
         self.softcap = getattr(cfg, "final_logit_softcapping", None)

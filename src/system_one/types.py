@@ -85,3 +85,33 @@ class Score(Question):
             "confidence": round(probs[best], 4),
             "legend": dict(enumerate(self.legend)),
         }
+
+
+def to_spec(q: Question) -> dict:
+    """JSON-serializable form of a question (for datasets and remote jobs)."""
+    d = {"key": q.key, "type": type(q).__name__.lower(), "question": q.question}
+    if isinstance(q, Choice):
+        d["options"] = list(q.options)
+    elif isinstance(q, Score):
+        d["legend"] = list(q.legend)
+    return d
+
+
+def from_spec(d: dict) -> Question:
+    kind = d["type"]
+    if kind == "bool":
+        return Bool(d["key"], d["question"])
+    if kind == "choice":
+        return Choice(d["key"], d["question"], options=list(d["options"]))
+    if kind == "score":
+        return Score(d["key"], d["question"], legend=list(d["legend"]))
+    raise ValueError(f"unknown question type {kind!r}")
+
+
+def answer_labels(q: Question) -> list[str]:
+    """The answer names in the order probabilities come back in."""
+    if isinstance(q, Bool):
+        return ["true", "false"]
+    if isinstance(q, Choice):
+        return list(q.options)
+    return [str(i) for i in range(len(q.legend))]

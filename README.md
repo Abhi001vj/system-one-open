@@ -72,6 +72,29 @@ First results (M5 Pro 24 GB, details and caveats in [`docs/experiments.md`](docs
 - **Honest gap:** 1–2B models are poorly calibrated and phrasing-sensitive. Gemma-4-E4B is much better.
   Calibration fine-tuning is the next real step ([`docs/roadmap.md`](docs/roadmap.md)).
 
+## Calibration training (Modal)
+
+Teacher labelling and LoRA training run on Modal; the teacher is scored with this same engine, so
+its targets are exact distributions rather than samples.
+
+```bash
+python training/build_dataset.py --out training/data/tasks.jsonl     # (state, questions) tasks
+modal volume put s1-data training/data/tasks.jsonl tasks.jsonl
+modal run modal_app/label.py --tasks tasks.jsonl                     # teacher: gemma-4-31B-it on H100
+modal run modal_app/train.py --labels labels-tasks.jsonl --epochs 1 --target-temp 1.5 --target-smooth 0.02
+```
+
+Pilot (1,487 tasks, Qwen2.5-1.5B student, one H100, **$0.46 total**):
+
+| | KL to teacher | agreement | ECE |
+|---|---|---|---|
+| base | 1.242 | 0.665 | 0.236 |
+| base + best temperature | 0.676 | — | — |
+| **+ calibration LoRA** | **0.211** | **0.912** | **0.040** |
+
+Held-out family (AG News, never trained on) improves too: KL 0.595 → 0.204, ECE 0.074 → 0.040.
+Caveats are listed with the numbers in [`docs/experiments.md`](docs/experiments.md).
+
 ## Docs
 
 - [`docs/README.md`](docs/README.md) — index

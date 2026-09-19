@@ -20,6 +20,16 @@ Two workstreams follow, in this order.
 
 ---
 
+## Status (2026-09-19)
+
+The pipeline is built and a pilot has run end to end on Modal: teacher labelling with
+`google/gemma-4-31B-it` on an H100 (5 tasks/s, $0.22 per 1k tasks) and a pilot LoRA on
+Qwen2.5-1.5B that cuts KL to the teacher from 1.24 to 0.21 and ECE from 0.236 to 0.040,
+beating temperature scaling (0.676 KL) — including on a held-out family. Numbers, caveats and
+the cost model are in [experiments.md](experiments.md). Remaining for C4/C5: bigger and less
+correlated data, an episode-level doom split, a second teacher, paraphrase augmentation, a
+bigger student, then release.
+
 ## Workstream 1 — calibration LoRA (the checkpoint worth releasing)
 
 **Goal:** a LoRA adapter (and merged HF + GGUF weights) whose answer-token probabilities are calibrated
@@ -45,6 +55,15 @@ Augmentations, applied at data-build time:
 - **Option shuffling:** permute option order and letters; targets are permuted to match. This fixes letter bias.
 - **Distractor states:** minimal edits that should flip the answer, like removing the enemy or changing health.
   Each becomes a pair with an opposite target.
+
+### 1.1a Infrastructure (built)
+
+- `modal_app/label.py` — teacher labelling on Modal, sharded, writes to the `s1-data` volume,
+  reports throughput and $ per 1k tasks. Teacher is scored with the inference engine itself.
+- `modal_app/train.py` — LoRA training on Modal; prints base vs temperature-scaled vs trained,
+  per family, and the run cost. `--push-to-hub` publishes the adapter.
+- `training/packing.py` — tree-masked packing and the KL loss; `training/trainer.py` — training,
+  evaluation (KL/Brier/ECE/agreement) and the temperature-scaling baseline.
 
 ### 1.2 Teacher distributions
 
@@ -101,9 +120,9 @@ including regressions.
 
 | id | deliverable | exit criterion |
 |---|---|---|
-| C1 | `training/` data builder + dataset card; 2k-example pilot | builder reproducible from one command |
-| C2 | loss + packed training loop; 4D-mask check on Unsloth vs PEFT | training loss matches inference probabilities on a fixed batch (<1e-3) |
-| C3 | pilot LoRA on Qwen2.5-1.5B | beats temperature scaling on ECE for ≥3 of 4 held-out families |
+| C1 | `training/` data builder + dataset card; 2k-example pilot | **done** — 1,487 tasks / 8,729 questions, one command |
+| C2 | loss + packed training loop; PEFT + custom 4D mask | **done** — `training/packing.py`, `training/trainer.py`, runs locally and on Modal |
+| C3 | pilot LoRA on Qwen2.5-1.5B | **done** — beats temperature scaling on every family incl. held-out (see experiments) |
 | C4 | full run on Gemma-4-E4B | fire-probe discrimination ≥0.9 on all 4 phrasings; race self-agreement ≥24/27 |
 | C5 | release on HF Hub (adapter + merged + GGUF) + model card | loads with `hf:` and `llamacpp:` presets and passes equivalence tests |
 

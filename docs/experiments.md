@@ -138,3 +138,60 @@ halluc). Too weak to navigate; parallel is 2–4× faster and never invalid, aut
 Agreement 22/27 (vs 14/27 for Qwen2.5-1.5B): the bigger model is far more self-consistent. Latency is
 bad because Qwen3.5's Gated DeltaNet layers have no fast MPS kernel in transformers (≈250 tok/s prefill).
 **Use llama.cpp or MLX for Qwen3.5 on Apple silicon**; the HF batch path is for correctness and CUDA.
+
+## 2026-09-18/19 — Modal pipeline: teacher labelling + pilot calibration LoRA
+
+Hardware: Modal H100 SXM5 ($3.95/h, Sep 2026 pricing). Teacher `google/gemma-4-31B-it` (63 GB bf16,
+one H100), read with the same parallel scorer as inference, so targets are exact distributions over
+each question's allowed answers — no sampling.
+
+**Dataset** (`training/build_dataset.py`): 1,487 tasks / 8,729 questions — 600 doom (real logged
+states), 587 synthetic tickets, 300 AG News, including 737 option-shuffled variants.
+
+**Labelling** (`modal_app/label.py`)
+
+| run | GPU | tasks | rate | load | cost | $/1k tasks |
+|---|---|---|---|---|---|---|
+| plumbing smoke (Qwen2.5-1.5B) | L4 | 20 | 2.7 tasks/s | 14 s | $0.02 | — |
+| teacher smoke (cold cache) | H100 | 60 | 2.1 tasks/s | 168 s (download) | $0.22 | $0.53 |
+| **full pilot (warm cache)** | H100 | 1,487 | **5.0 tasks/s (29 questions/s)** | 46 s | **$0.38** | **$0.22** |
+
+**Pilot LoRA** (`modal_app/train.py`, Qwen2.5-1.5B-Instruct, r=16, 1 epoch, lr 1e-4, teacher targets
+softened with temp 1.5 + 2% uniform): 1,069 train / 118 val / 300 held-out (`clf:ag_news` held out
+entirely). 81 steps, 0.65 s/step, 53 s training, **$0.08**.
+
+| model | KL to teacher | agreement | ECE | Brier |
+|---|---|---|---|---|
+| base Qwen2.5-1.5B | 1.242 | 0.665 | 0.236 | 0.505 |
+| base + best temperature (T = 4.0) | 0.676 | — | — | — |
+| **+ calibration LoRA** | **0.211** | **0.912** | **0.040** | **0.112** |
+
+Per family (base → trained):
+
+| family | KL | agreement | ECE |
+|---|---|---|---|
+| ticket | 1.316 → 0.106 | 0.634 → 0.958 | 0.281 → 0.036 |
+| doom | 1.747 → 0.340 | 0.471 → 0.842 | 0.332 → 0.045 |
+| clf:ag_news (**held out**) | 0.595 → 0.204 | 0.917 → 0.930 | 0.074 → 0.040 |
+
+It clears the C3 exit criterion (beat temperature scaling on ECE/KL) on all three families, including
+one never trained on.
+
+Nuance, and it matters:
+1. **Agreement is with the teacher, not with truth.** A calibrated copy of Gemma-4-31B's opinions is
+   the goal here, but its opinions are not ground truth.
+2. **Doom val states are correlated with training states** — consecutive ticks look alike even after
+   deduplication, so doom numbers are optimistic. Split by episode next.
+3. Only AG News was a true held-out *family*; ticket/doom validation shares generators with training.
+4. Teacher targets are saturated (0.00/1.00), so the student is trained toward near-binary targets
+   even after softening; an ensemble of two teachers would give better-grounded spreads.
+5. Single seed, single epoch, one small student.
+
+**Cost model for a full run** (H100, warm cache), extrapolated from the measured rates:
+
+| stage | quantity | estimate |
+|---|---|---|
+| labelling | 20k tasks @ 5 tasks/s | ~67 min, **≈ $4.4** |
+| training | ~1,090 steps/epoch @ 0.65 s | ~12 min/epoch, **≈ $0.8/epoch** |
+| evals + re-runs | — | ~$2 |
+| **total** | | **≈ $8** of the $30 credit |

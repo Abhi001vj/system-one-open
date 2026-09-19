@@ -15,3 +15,10 @@ Raw run records referenced by [`docs/experiments.md`](../docs/experiments.md), o
 | `wikirace-qwen25-all.json` | Wikirace v1 (before body-only links / redirect fix), Qwen2.5-1.5B |
 | `wikirace-qwen25-all-v2.json` | Wikirace v2, Qwen2.5-1.5B |
 | `wikirace-gemma4-e4b-llamacpp.json` | Wikirace v2, Gemma-4-E4B Q4 via llama-server |
+
+## 2026-09-19
+
+| file | what |
+|---|---|
+| `report-pilot-qwen25-1.5b.json` | pilot calibration LoRA: config, per-family base / temperature-baseline / trained metrics, loss history, cost |
+| `tasks-pilot.jsonl` | the 1,487-task pilot dataset (pre-labelling) |
