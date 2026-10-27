@@ -12,3 +12,5 @@ training/out/
 .env.local
 .env
 node_modules/
+
+.scratch/
