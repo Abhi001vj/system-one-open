@@ -13,11 +13,14 @@ dependencies = [
 
 [project.optional-dependencies]
 doom = ["vizdoom>=1.3", "numpy"]
+server = ["fastapi", "uvicorn"]
+train = ["peft", "datasets", "beautifulsoup4"]
 
 [project.scripts]
 s1-race = "system_one.demos.race:main"
 s1-doom = "system_one.demos.doom:main"
 s1-wikirace = "system_one.demos.wikirace:main"
+s1-serve = "system_one.api:main"
 
 [build-system]
 requires = ["hatchling"]

@@ -8,6 +8,7 @@
 | [plan.md](plan.md) | **Current plan:** calibration LoRA (checkpoint release) then shared-prefix llama.cpp backend, with milestones and exit criteria |
 | [roadmap.md](roadmap.md) | Demos, calibration fine-tuning (Unsloth), MLX backend, open questions |
 | [prior-art/typesafe-jev.md](prior-art/typesafe-jev.md) | Notes on TypeSafe's System One / Jev launch post: claims, nuance, what we can and can't replicate |
+| [prior-art/laya.md](prior-art/laya.md) | Laya (Convai Innovations): architecture, dates, what its 0.766 headline means, and how it compares to this engine |
 | [prior-art/antibenchmaxxing.md](prior-art/antibenchmaxxing.md) | Notes on TypeSafe's "Lies, Damned Lies, and Benchmarks" post and the eval rules we adopt from it |
 
 Conventions: results go in `experiments.md` with date, hardware, backend spec and exact command.

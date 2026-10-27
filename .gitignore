@@ -9,3 +9,6 @@ wandb/
 *.gguf
 training/data/
 training/out/
+.env.local
+.env
+node_modules/

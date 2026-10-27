@@ -83,6 +83,7 @@ class Score(Question):
             "score": round(sum(i * p for i, p in enumerate(probs)), 3),
             "level": best,
             "confidence": round(probs[best], 4),
+            "probabilities": [round(p, 4) for p in probs],
             "legend": dict(enumerate(self.legend)),
         }
 

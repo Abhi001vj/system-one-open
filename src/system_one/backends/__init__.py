@@ -28,6 +28,8 @@ PRESETS: dict[str, str] = {
 
 def load_backend(spec: str, **kwargs) -> Backend:
     spec = PRESETS.get(spec, spec)
+    if "/" in spec and ":" not in spec.split("/")[0]:
+        spec = "hf:" + spec  # bare Hugging Face id
     kind, _, rest = spec.partition(":")
     if kind == "hf":
         from .hf import HFBackend

@@ -45,6 +45,7 @@ AMMO_WEAPONS = {
 ARMOR = {"GreenArmor", "BlueArmor", "ArmorBonus"}
 WEAPON_NAMES = {1: "fist/chainsaw", 2: "pistol", 3: "shotgun", 4: "chaingun", 5: "rocket launcher", 6: "plasma rifle", 7: "BFG"}
 
+DOOM_PREAMBLE = "You are the tactical brain of a Doom player. Standing orders: {order}"
 MOVES = ["hold_ground", "advance", "back_off", "strafe_left", "strafe_right"]
 DODGES = ["no_dodge", "dodge_left", "dodge_right", "dodge_back"]
 
@@ -248,7 +249,7 @@ def main():
     os.makedirs("runs", exist_ok=True)
     log_path = args.log or f"runs/doom-{time.strftime('%Y%m%d-%H%M%S')}.jsonl"
     log = open(log_path, "w")
-    preamble = f"You are the tactical brain of a Doom player. Standing orders: {args.order}"
+    preamble = DOOM_PREAMBLE.format(order=args.order)
     latencies: list[float] = []
     panel = {"a": None, "b": None, "plan": "", "obs": "", "action": ""}
 
